@@ -7,6 +7,11 @@ namespace Martian_Robots
     {
         static void Main(string[] args)
         {
+            #region Initilize
+                Mars.BuildMarsMap();
+            #endregion
+
+            WriteOutput($"Mars set successfully with boundaries: X:{Mars.Boundary.X}, Y:{Mars.Boundary.Y}");
         }
     }
 }
