@@ -188,7 +188,7 @@ namespace Martian_Robots_Tests
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
                 // Act
-                rover.StartRoverMovement(50, 50, null, unitTestObject);
+                rover.ProcessRoverMovements(50, 50, null, null, unitTestObject);
 
                 // Assert
                 Assert.AreEqual(expectedCoordinate, rover.Position);
@@ -210,7 +210,7 @@ namespace Martian_Robots_Tests
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    rover.StartRoverMovement(50, 50, null, unitTestObject);
+                    rover.ProcessRoverMovements(50, 50, null, null, unitTestObject);
                 }
 
                 // Assert

@@ -84,6 +84,17 @@
             RoverInstructions
         }
 
+        public class RoverScent
+        {
+            public Coordinate Coordinate { get; set; }
+            public Direction Direction { get; set; }
+            public RoverScent(Coordinate coordinate, Direction direction)
+            {
+                Coordinate = coordinate;
+                Direction = direction;
+            }
+        }
+
         #endregion
 
         #region Message Dictionaries
