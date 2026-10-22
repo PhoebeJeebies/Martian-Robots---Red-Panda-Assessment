@@ -32,11 +32,34 @@
             public string? Input { get; set; }
             public string? ErrorMessage { get; set; }
         }
+        public class InputCollection
         {
+            public List<string> Inputs { get; set; }
 
+            public InputCollection(List<string> InputList)
             {
+                Inputs = InputList;
+            }
+            public bool hasInput()
+            {
+                return Inputs.Count > 0;
             }
 
+            public string? getNextInput()
+            {
+                // Return the first instruction in the list, or null if the list is empty and remove it from the list
+                string? instruction = Inputs.FirstOrDefault();
+                if (instruction != null)
+                {
+                    Inputs.RemoveAt(0);
+                }
+                return instruction;
+            }
+
+            public void addInput(string input)
+            {
+                Inputs.Add(input);
+            }
         }
 
         #endregion
@@ -44,7 +67,9 @@
         #region Message Dictionaries
         public static Dictionary<string, string> Messages = new()
             {
+                {"Instructions_InputPreference_Individual", "You will be prompted for each input individually. Press Enter to submit your input." },
                 {"Mars_RequestInput", "Please enter the upper-right coordinates (max 50 50) of the Mars grid (e.g., '5 3')" },
+                {"Instructions_RequestInput", "Please enter an instruction or type 'done' to finish." }
             };
 
         public static Dictionary<string, string> ErrorCodes = new()
@@ -56,8 +81,6 @@
             };
 
         #endregion
-
-        #region  Input Methods
 
 
     }

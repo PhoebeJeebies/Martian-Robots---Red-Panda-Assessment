@@ -12,6 +12,16 @@ namespace Martian_Robots
             Boundary = boundary;
         }
 
+        public static bool isMarsInitialized()
+        {
+            if (Boundary.X > 0 && Boundary.Y > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         internal static string GetValidatedUserInput(UnitTestObject? testHook_Object = null)
         {
             // Prompt user for input, or use test object input if provided

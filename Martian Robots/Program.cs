@@ -8,8 +8,18 @@ namespace Martian_Robots
         static void Main(string[] args)
         {
             #region Initilize
+            InputCollection userInstructions = new(new List<string>());
+
+            WriteMessage(Messages["Instructions_InputPreference_Individual"]);
+
+            if (!Mars.isMarsInitialized())
+            {
                 Mars.BuildMarsMap();
+            }
+
             #endregion
+
+            userInstructions = GatherUserInput();
 
             WriteOutput($"Mars set successfully with boundaries: X:{Mars.Boundary.X}, Y:{Mars.Boundary.Y}");
         }
