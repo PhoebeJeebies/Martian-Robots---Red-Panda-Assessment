@@ -83,7 +83,7 @@
                 { "Rover_Build_OutOfBounds", "Starting coordinates are out of bounds of Mars. Please enter values within the bounds you specified for Mars." },
                 { "Rover_Build_InvalidDirection", "Invalid direction. Please enter N, E, S, or W." },
                 { "Rover_Instructions_EmptyInput", "Input cannot be empty. Please provide movement instructions for the rover." },
-                { "Rover_Instructions_InvalidCharacters", "Invalid instruction detected. Please enter only L, R, or F for the movement instructions." },
+                { "Rover_Instructions_InvalidCharacters", "Invalid instruction detected. Please enter only L, R, or F as capital letters for the movement instructions." },
             };
 
         #endregion

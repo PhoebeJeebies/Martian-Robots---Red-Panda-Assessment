@@ -26,7 +26,7 @@ namespace Martian_Robots
 
             if (roverDestinationOutput.Count > 0)
             {
-                WriteMessage("\n Rover Destinations Output: ", ConsoleColor.Cyan);
+                WriteMessage("Rover Destinations Output: ", ConsoleColor.Cyan);
                 foreach (string output in roverDestinationOutput)
                 {
                     WriteOutput(output);
