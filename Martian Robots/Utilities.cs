@@ -32,35 +32,6 @@
             public string? Input { get; set; }
             public string? ErrorMessage { get; set; }
         }
-        public class InputCollection
-        {
-            public List<string> Inputs { get; set; }
-
-            public InputCollection(List<string> InputList)
-            {
-                Inputs = InputList;
-            }
-            public bool hasInput()
-            {
-                return Inputs.Count > 0;
-            }
-
-            public string? getNextInput()
-            {
-                // Return the first instruction in the list, or null if the list is empty and remove it from the list
-                string? instruction = Inputs.FirstOrDefault();
-                if (instruction != null)
-                {
-                    Inputs.RemoveAt(0);
-                }
-                return instruction;
-            }
-
-            public void addInput(string input)
-            {
-                Inputs.Add(input);
-            }
-        }
 
         public enum Direction
         {
@@ -75,13 +46,6 @@
             F,
             L,
             R
-        }
-
-        public enum InputTypes
-        {
-            Mars,
-            Rover,
-            RoverInstructions
         }
 
         public class RoverScent
