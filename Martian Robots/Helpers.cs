@@ -1,4 +1,5 @@
-﻿using static Martian_Robots.Utilities;
+﻿using System.Text.RegularExpressions;
+using static Martian_Robots.Utilities;
 
 namespace Martian_Robots
 {
@@ -33,18 +34,23 @@ namespace Martian_Robots
 
         #endregion
 
+        internal static string WrappedTextFormatter(string message)
+        {
+            return Regex.Replace(message, @"(.{1," + Console.WindowWidth + @"})(?:\s+|$)", "$1\n");
+        }
+
         #region Output Methods
 
-        public static void WriteMessage(string message)
+        public static void WriteMessage(string message, ConsoleColor? color = null)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(message);
+            Console.ForegroundColor = color ?? ConsoleColor.Yellow;
+            Console.WriteLine(WrappedTextFormatter(message));
             Console.ResetColor();
         }
         public static void WriteOutput(string message)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(message);
+            Console.WriteLine(WrappedTextFormatter(message));
             Console.ResetColor();
         }
         public static void WriteError(string errorCode)
