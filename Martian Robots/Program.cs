@@ -1,5 +1,5 @@
-﻿using static Martian_Robots.Utilities;
-using static Martian_Robots.Mars;
+﻿using static Martian_Robots.Helpers;
+using static Martian_Robots.Utilities;
 
 namespace Martian_Robots
 {

@@ -1,4 +1,5 @@
 ﻿
+using static Martian_Robots.Helpers;
 using static Martian_Robots.Utilities;
 
 namespace Martian_Robots
@@ -14,7 +15,7 @@ namespace Martian_Robots
         internal static string GetValidatedUserInput(UnitTestObject? testHook_Object = null)
         {
             // Prompt user for input, or use test object input if provided
-            string? input = testHook_Object?.Input ?? RequestUserInput("Mars_RequestInput");
+            string? input = testHook_Object?.Input ?? RequestUserInput_SingleLine("Mars_RequestInput");
 
             if (!ValidateUserInputForMarsMap(input, out string? errorCode))
             {
