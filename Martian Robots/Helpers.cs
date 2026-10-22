@@ -2,7 +2,7 @@
 
 namespace Martian_Robots
 {
-    internal class Helpers
+    public static class Helpers
     {
 
         #region Parsing Methods
@@ -21,6 +21,23 @@ namespace Martian_Robots
 
             return new Coordinate(x, y);
         }
+        public static Instruction[] ParseInstructions(string input)
+        {
+            List<Instruction> instructions = new();
+            foreach (char c in input)
+            {
+                if (Enum.TryParse(c.ToString(), out Instruction instruction))
+                {
+                    instructions.Add(instruction);
+                }
+                else
+                {
+                    throw new FormatException($"Invalid instruction character: {c}");
+                }
+            }
+            return instructions.ToArray();
+        }
+
 
         #endregion
 
@@ -58,32 +75,5 @@ namespace Martian_Robots
 
         #endregion
 
-        #region Input Handling
-
-        public static InputCollection GatherUserInput()
-        {
-            InputCollection userInputCollection = new(new List<string>());
-
-            bool userCompletedInput = false;
-
-            while (!userCompletedInput)
-            {
-                string? userInput = RequestUserInput_SingleLine("Instructions_RequestInput");
-
-                if (userInput != null && userInput.Equals("done", StringComparison.OrdinalIgnoreCase))
-                {
-                    userCompletedInput = true;
-                }
-                else
-                {
-                    userInputCollection.addInput(userInput!);
-                }
-            }
-
-            return userInputCollection;
-
-        }
-
-        #endregion
     }
 }

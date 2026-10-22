@@ -8,7 +8,7 @@ namespace Martian_Robots
         static void Main(string[] args)
         {
             #region Initilize
-            InputCollection userInstructions = new(new List<string>());
+            List<string> roverDestinationOutput = new();
 
             WriteMessage(Messages["Instructions_InputPreference_Individual"]);
 
@@ -19,9 +19,19 @@ namespace Martian_Robots
 
             #endregion
 
-            userInstructions = GatherUserInput();
+            while (roverDestinationOutput.Count == 0)
+            {
+                Rover.BuildAndProcessRoversFromUserInputs(out roverDestinationOutput, Mars.Boundary.X, Mars.Boundary.Y);
+            }
 
-            WriteOutput($"Mars set successfully with boundaries: X:{Mars.Boundary.X}, Y:{Mars.Boundary.Y}");
+            if (roverDestinationOutput.Count > 0)
+            {
+                WriteMessage("\n Rover Destinations Output: ", ConsoleColor.Cyan);
+                foreach (string output in roverDestinationOutput)
+                {
+                    WriteOutput(output);
+                }
+            }
         }
     }
 }
