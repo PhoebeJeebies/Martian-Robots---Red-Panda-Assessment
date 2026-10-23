@@ -21,7 +21,7 @@ namespace Martian_Robots
 
         #region Build
 
-        public static Rover? BuildRover(int maxX, int maxY, string? input = null, UnitTestObject? testHook_Object = null)
+        public static Rover? BuildRover(string? input = null, UnitTestObject? testHook_Object = null)
         {
             Rover? rover = null;
             input = testHook_Object?.Input ?? input ?? string.Empty;
@@ -33,7 +33,7 @@ namespace Martian_Robots
             }
 
             // Validate the provided input for unit testing
-            if (!ValidateUserInputForRover(input, out string? errorCode, maxX, maxY))
+            if (!ValidateUserInputForRover(input, out string? errorCode))
             {
                 // Handle validation error
                 WriteError(errorCode!);
@@ -67,7 +67,7 @@ namespace Martian_Robots
 
         #region Rover Specific Input Validation
 
-        public static bool ValidateUserInputForRover(string? input, out string? errorCode, int maxX, int maxY)
+        public static bool ValidateUserInputForRover(string? input, out string? errorCode)
         {
             errorCode = string.Empty;
 
@@ -94,7 +94,7 @@ namespace Martian_Robots
                     errorCode = "Rover_Build_InvalidDirection";
                     break;
                 }
-                if (x < 0 || x > maxX || y < 0 || y > maxY)
+                if (x < 0 || x > Mars.Boundary.X || y < 0 || y > Mars.Boundary.Y)
                 {
                     errorCode = "Rover_Build_OutOfBounds";
                     break;
@@ -136,7 +136,7 @@ namespace Martian_Robots
 
         #endregion
 
-        public static void BuildAndProcessRoversFromUserInputs(out List<string> output, int maxX, int maxY)
+        public static void BuildAndProcessRoversFromUserInputs(out List<string> output)
         {
             output = new List<string>();
 
@@ -161,7 +161,7 @@ namespace Martian_Robots
                     }
                     else
                     {
-                        rover = Rover.BuildRover(maxX, maxY, userInput);
+                        rover = Rover.BuildRover(userInput);
 
                         if (rover == null)
                         {
@@ -173,7 +173,7 @@ namespace Martian_Robots
                 else
                 {
                     // we can let the StartRoverMovement method handle the user input for the rover's movement instructions as we dont need access to the user input here
-                    rover.ProcessRoverMovements(maxX, maxY, sessionScentsSet);
+                    rover.ProcessRoverMovements(sessionScentsSet);
                     // After processing the rover's movements, we can add its final position and orientation to the output list
                     output.Add($"{rover.Position.X} {rover.Position.Y} {rover.Orientation}" + (rover.LostRoverFlag ? " LOST" : ""));
                     // current implementation does not support multiple rover instruction sequences, so we reset the rover after processing its instructions
@@ -184,7 +184,7 @@ namespace Martian_Robots
 
         #region Process Movement Instructions and Orientation Changes
 
-        public void ProcessRoverMovements(int maxX, int maxY, HashSet<RoverScent>? sessionScentsSet, string? input = null, UnitTestObject? testHook_Object = null)
+        public void ProcessRoverMovements(HashSet<RoverScent>? sessionScentsSet, string? input = null, UnitTestObject? testHook_Object = null)
         {
             input = input ?? testHook_Object?.Input ?? string.Empty;
 
@@ -208,23 +208,23 @@ namespace Martian_Robots
                     return;
                 }
                 // if the input is invalid, recursively call ProcessRoverMovements to prompt for input again
-                ProcessRoverMovements(maxX, maxY, sessionScentsSet);
+                ProcessRoverMovements(sessionScentsSet);
             }
             else
             {
                 // If the input is valid, parse and process the instructions
                 Instruction[] instructions = Helpers.ParseInstructions(input!);
-                ProcessMoveInstructions(instructions, maxX, maxY, sessionScentsSet);
+                ProcessMoveInstructions(instructions, sessionScentsSet);
             }
         }
 
-        public void ProcessMoveInstructions(Instruction[] instruction, int maxX, int maxY, HashSet<RoverScent>? sessionScentsSet)
+        public void ProcessMoveInstructions(Instruction[] instruction, HashSet<RoverScent>? sessionScentsSet)
         {
             foreach (Instruction command in instruction)
             {
                 if (command == Instruction.F)
                 {
-                    MoveForward(maxX, maxY, sessionScentsSet);
+                    MoveForward(sessionScentsSet);
                     if (LostRoverFlag)
                     {
                         // If the rover is lost, stop processing further instructions
@@ -238,7 +238,7 @@ namespace Martian_Robots
             }
         }
 
-        internal void MoveForward(int maxX, int maxY, HashSet<RoverScent>? sessionScentsSet)
+        internal void MoveForward(HashSet<RoverScent>? sessionScentsSet)
         {
             Coordinate newPosition = Position;
             switch (Orientation)
@@ -263,7 +263,7 @@ namespace Martian_Robots
                 return;
             }
             // Check if the new position is within the bounds of the Mars grid
-            if (newPosition.X >= 0 && newPosition.X <= maxX && newPosition.Y >= 0 && newPosition.Y <= maxY)
+            if (newPosition.X >= 0 && newPosition.X <= Mars.Boundary.X && newPosition.Y >= 0 && newPosition.Y <= Mars.Boundary.Y)
             {
                 Position = newPosition;
             }

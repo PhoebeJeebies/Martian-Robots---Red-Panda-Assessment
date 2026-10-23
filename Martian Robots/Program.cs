@@ -22,7 +22,7 @@ namespace Martian_Robots
 
             while (roverDestinationOutput.Count == 0)
             {
-                Rover.BuildAndProcessRoversFromUserInputs(out roverDestinationOutput, Mars.Boundary.X, Mars.Boundary.Y);
+                Rover.BuildAndProcessRoversFromUserInputs(out roverDestinationOutput);
             }
 
             if (roverDestinationOutput.Count > 0)

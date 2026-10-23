@@ -12,6 +12,12 @@ namespace Martian_Robots_Tests
         [TestClass]
         public sealed class MartianRobotsTests_Mars
         {
+            [TestCleanup]
+            public void TearDown()
+            {
+                Mars.Boundary = new Coordinate(0, 0);
+            }
+
             [TestMethod]
             public void BuildMarsTest_ValidInput_ReturnsExpectedMarsGrid()
             {
@@ -107,6 +113,12 @@ namespace Martian_Robots_Tests
         [TestClass]
         public sealed class MartianRobotsTests_Rover
         {
+            [TestCleanup]
+            public void TearDown()
+            {
+                Mars.Boundary = new Coordinate(0, 0);
+            }
+
             [TestMethod]
             public void BuildRoverTest_ValidInput_ReturnsExpectedRover()
             {
@@ -121,8 +133,10 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = input };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
-                rover = BuildRover(5, 3, null, unitTestObject);
+                rover = BuildRover(null, unitTestObject);
 
                 // Assert
                 Assert.AreEqual(expectedCoordinate, rover?.Position);
@@ -139,11 +153,14 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = input };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    BuildRover(5, 3, null, unitTestObject);
+                    BuildRover(null, unitTestObject);
                 }
+
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
             }
@@ -158,10 +175,12 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = input };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    BuildRover(5, 3, null, unitTestObject);
+                    BuildRover(null, unitTestObject);
                 }
 
                 // Assert
@@ -178,10 +197,12 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = input };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    BuildRover(5, 3, null, unitTestObject);
+                    BuildRover(null, unitTestObject);
                 }
 
                 // Assert
@@ -198,10 +219,12 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = input };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    BuildRover(5, 3, null, unitTestObject);
+                    BuildRover(null, unitTestObject);
                 }
 
                 // Assert
@@ -224,8 +247,10 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
-                rover.ProcessRoverMovements(50, 50, null, null, unitTestObject);
+                rover.ProcessRoverMovements(null, null, unitTestObject);
 
                 // Assert
                 Assert.AreEqual(expectedCoordinate, rover.Position);
@@ -248,10 +273,12 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
-                    rover.ProcessRoverMovements(50, 50, null, null, unitTestObject);
+                    rover.ProcessRoverMovements(null, null, unitTestObject);
                 }
 
                 // Assert
@@ -273,8 +300,10 @@ namespace Martian_Robots_Tests
 
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
+                Mars.Boundary = new Coordinate(4, 4);
+
                 // Act
-                rover.ProcessRoverMovements(marsBounds.X, marsBounds.Y, null, null, unitTestObject);
+                rover.ProcessRoverMovements(null, null, unitTestObject);
 
                 // Assert
                 Assert.AreEqual(rover.Position.Y, marsBounds.Y);
@@ -289,12 +318,14 @@ namespace Martian_Robots_Tests
                 Rover firstRover = new(new Coordinate(0, 0), Direction.S);
                 Rover secondRover = new(new Coordinate(0, 0), Direction.S);
 
+                Mars.Boundary = new Coordinate(5, 3);
+
                 // Act
-                firstRover.ProcessRoverMovements(5, 5, sessionScentsSet, "F");
-                secondRover.ProcessRoverMovements(5, 5, sessionScentsSet, "F");
+                firstRover.ProcessRoverMovements(sessionScentsSet, "F");
+                secondRover.ProcessRoverMovements(sessionScentsSet, "F");
 
                 // Assert
-                Assert.AreEqual(1, sessionScentsSet.Count);
+                Assert.HasCount(1, sessionScentsSet);
                 Assert.AreEqual(0, firstRover.Position.X);
                 Assert.AreEqual(0, firstRover.Position.Y);
                 Assert.AreEqual(0, secondRover.Position.X);
