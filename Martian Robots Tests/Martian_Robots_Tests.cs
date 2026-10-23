@@ -80,6 +80,22 @@ namespace Martian_Robots_Tests
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
             }
+
+            [TestMethod]
+            public void BuildMarsTest_MaxBoundaryInput_ReturnsExpectedMarsGrid()
+            {
+                // Arrange
+                string input = "50 50";
+
+                Coordinate expectedCoordinate = new(50, 50);
+
+                // Act
+                BuildMarsMap(new UnitTestObject { Input = input });
+                Coordinate resultCoordinate = Mars.Boundary;
+
+                // Assert
+                Assert.AreEqual(expectedCoordinate, resultCoordinate);
+            }
         }
 
 
@@ -215,6 +231,50 @@ namespace Martian_Robots_Tests
 
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
+            }
+
+            [TestMethod]
+            public void MoveRoverTest_OutOfBoundsInstructions_RoverIsAtExpectedPosition()
+            {
+                // Arrange
+                Coordinate initialCoordinate = new(1, 2);
+                Coordinate marsBounds = new(4, 4);
+
+                Direction initialDirection = Direction.N;
+
+                Rover rover = new(initialCoordinate, initialDirection);
+
+                string instructions = "FFFFFFFFF";
+
+                UnitTestObject unitTestObject = new() { Input = instructions };
+
+                // Act
+                rover.ProcessRoverMovements(marsBounds.X, marsBounds.Y, null, null, unitTestObject);
+
+                // Assert
+                Assert.AreEqual(rover.Position.Y, marsBounds.Y);
+            }
+
+            [TestMethod]
+            public void MoveRoverTest_ScentPreventsSecondRoverFromBeingLost()
+            {
+                // Arrange
+                HashSet<RoverScent> sessionScentsSet = new();
+
+                Rover firstRover = new(new Coordinate(0, 0), Direction.S);
+                Rover secondRover = new(new Coordinate(0, 0), Direction.S);
+
+                // Act
+                firstRover.ProcessRoverMovements(5, 5, sessionScentsSet, "F");
+                secondRover.ProcessRoverMovements(5, 5, sessionScentsSet, "F");
+
+                // Assert
+                Assert.AreEqual(1, sessionScentsSet.Count);
+                Assert.AreEqual(0, firstRover.Position.X);
+                Assert.AreEqual(0, firstRover.Position.Y);
+                Assert.AreEqual(0, secondRover.Position.X);
+                Assert.AreEqual(0, secondRover.Position.Y);
+                Assert.AreEqual(Direction.S, secondRover.Orientation);
             }
         }
     }
