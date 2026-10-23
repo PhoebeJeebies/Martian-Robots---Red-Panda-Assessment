@@ -69,6 +69,7 @@
                 {"Mars_RequestInput", "Please enter the upper-right coordinates (max 50 50) of the Mars grid (e.g., '5 3')" },
                 {"Rover_RequestInput", "Please enter the starting coordinates and starting orientation for a rover (e.g., '1 2 N')" },
                 {"Rover_RequestInstructions", "Please enter the movement instructions for the rover (e.g., 'LFRFRR')" },
+                {"App_Start", "Welcome to the Martian Robots simulation!" }
             };
 
         public static Dictionary<string, string> ErrorCodes = new()

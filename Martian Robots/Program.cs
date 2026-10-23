@@ -10,6 +10,7 @@ namespace Martian_Robots
             #region Initilize
             List<string> roverDestinationOutput = new();
 
+            WriteMessage(Messages["App_Start"] + "\n Version " + typeof(Program).Assembly.GetName().Version, ConsoleColor.Cyan);
             WriteMessage(Messages["Instructions_InputPreference_Individual"]);
 
             if (!Mars.isMarsInitialized())
