@@ -17,6 +17,7 @@ namespace Martian_Robots_Tests
             {
                 // Arrange
                 string input = "5 3";
+
                 Coordinate expectedCoordinate = new(5, 3);
 
                 // Act
@@ -33,6 +34,7 @@ namespace Martian_Robots_Tests
                 // Arrange
                 string input = "50 51";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Mars_OutOfBounds"];
+
                 UnitTestObject unitTestObject = new() { Input = input };
 
                 // Act
@@ -51,6 +53,7 @@ namespace Martian_Robots_Tests
                 // Arrange
                 string input = "Foobar";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Mars_InvalidCharacters"];
+
                 UnitTestObject unitTestObject = new() { Input = input };
 
                 // Act
@@ -69,6 +72,7 @@ namespace Martian_Robots_Tests
                 // Arrange
                 string input = "1341";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Mars_InvalidFormat"];
+
                 UnitTestObject unitTestObject = new() { Input = input };
 
                 // Act
@@ -109,9 +113,12 @@ namespace Martian_Robots_Tests
                 // Arrange
                 string input = "1 2 N";
                 Coordinate expectedCoordinate = new(1, 2);
+
                 Direction expectedDirection = Direction.N;
+
                 Rover expectedRover = new(expectedCoordinate, expectedDirection);
                 Rover? rover = null;
+
                 UnitTestObject unitTestObject = new() { Input = input };
 
                 // Act
@@ -129,6 +136,7 @@ namespace Martian_Robots_Tests
                 string input = "10 2o N";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Rover_Build_InvalidCharacters"];
                 string receivedErrorMessage = string.Empty;
+
                 UnitTestObject unitTestObject = new() { Input = input };
 
                 // Act
@@ -147,12 +155,15 @@ namespace Martian_Robots_Tests
                 string input = "1 2";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Rover_Build_InvalidFormat"];
                 string receivedErrorMessage = string.Empty;
+
                 UnitTestObject unitTestObject = new() { Input = input };
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
                     BuildRover(5, 3, null, unitTestObject);
                 }
+
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
             }
@@ -164,12 +175,15 @@ namespace Martian_Robots_Tests
                 string input = "1 2 SW";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Rover_Build_InvalidDirection"];
                 string receivedErrorMessage = string.Empty;
+
                 UnitTestObject unitTestObject = new() { Input = input };
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
                     BuildRover(5, 3, null, unitTestObject);
                 }
+
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
             }
@@ -181,12 +195,15 @@ namespace Martian_Robots_Tests
                 string input = "6 2 N";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Rover_Build_OutOfBounds"];
                 string receivedErrorMessage = string.Empty;
+
                 UnitTestObject unitTestObject = new() { Input = input };
+
                 // Act
                 while (String.IsNullOrEmpty(unitTestObject.ErrorMessage))
                 {
                     BuildRover(5, 3, null, unitTestObject);
                 }
+
                 // Assert
                 Assert.AreEqual(expectedErrorMessage, unitTestObject.ErrorMessage);
             }
@@ -196,11 +213,15 @@ namespace Martian_Robots_Tests
             {
                 // Arrange
                 Coordinate initialCoordinate = new(1, 2);
-                Direction initialDirection = Direction.N;
-                Rover rover = new(initialCoordinate, initialDirection);
-                string instructions = "LFRFRR";
                 Coordinate expectedCoordinate = new(0, 3);
+
+                Direction initialDirection = Direction.N;
                 Direction expectedDirection = Direction.S;
+
+                Rover rover = new(initialCoordinate, initialDirection);
+
+                string instructions = "LFRFRR";
+
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
                 // Act
@@ -216,11 +237,15 @@ namespace Martian_Robots_Tests
             {
                 // Arrange
                 Coordinate initialCoordinate = new(1, 2);
+
                 Direction initialDirection = Direction.N;
+
                 Rover rover = new(initialCoordinate, initialDirection);
+
                 string instructions = "LFRXRR";
                 string expectedErrorMessage = "Error: " + Utilities.ErrorCodes["Rover_Instructions_InvalidCharacters"];
                 string receivedErrorMessage = string.Empty;
+
                 UnitTestObject unitTestObject = new() { Input = instructions };
 
                 // Act
